@@ -1,0 +1,53 @@
+import { useEffect, useState } from 'react';
+
+// components
+import { PostDetails } from './PostDetails';
+
+// hooks
+import { UseFetch } from '../hooks/UseFetch';
+
+
+export const Post = (props) => {
+  const { 
+    id,
+    name,
+    desc,
+    img 
+  } = props;
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [initLoad, setInitialLoad] = useState(false);
+  const closeModal = () => {
+    setIsOpen(false);
+    setInitialLoad(false);
+  }
+  const openModal = () => {
+    setIsOpen(true);
+    setInitialLoad(true);
+  }
+
+  const ENDPOINT = `/posts/${ id }?populate[products][populate]=product_image`;
+  const data = UseFetch(ENDPOINT, initLoad);
+  // console.log('data', data);
+
+  return (
+    <>
+      <div 
+        onClick={ () => openModal(id) }
+        className="cursor-pointer bg-white hover:bg-indigo-200 md:max-w-sm h-56 border-2 p-6 flex transition-all ease-in-out duration-100 shadow-sm"
+    >
+          <img src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="image placeholder" />
+          {/* { data?.attributes && data.attributes.name } */}
+          { name }
+      </div>
+
+      <PostDetails 
+        isOpen={ isOpen }
+        open={ openModal }
+        close={ closeModal }
+        post={ { id, name, desc, img } }
+        products={ data?.attributes.products.data }
+      />
+    </>
+  );
+}

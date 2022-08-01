@@ -1,3 +1,22 @@
+@tailwind base;
+
+@tailwind components;
+@layer components {
+  .btn {
+    @apply text-black text-lg text-center font-bold py-2 px-4 mx-1 rounded;
+  }
+
+  .btn-primary {
+    @apply bg-transparent border border-slate-900 hover:bg-slate-500 hover:text-white transition-all ease-in-out duration-100 shadow-md capitalize;
+  }
+
+  .btn-warning {
+    @apply text-white bg-orange-500 hover:bg-orange-700;
+  }
+}
+
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,3 +30,40 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.back-fab {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  z-index: 2;
+  background: #fff no-repeat center center
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBzdHlsZT0idHJhbnNmb3JtOiBzY2FsZVgoLTEpOyI+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0xMiA0bC0xLjQxIDEuNDFMMTYuMTcgMTFINHYyaDEyLjE3bC01LjU4IDUuNTlMMTIgMjBsOC04eiIgZmlsbD0iIzAwMDAwMCIgLz48L3N2Zz4=");
+  border: none;
+  border-radius: 50%;
+  box-shadow: 1px 0 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  height: 32px;
+  outline: none;
+  width: 32px;
+  display: inline-block;
+}
+
+.rec.rec-arrow:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.rec.rec-arrow:disabled {
+  visibility: hidden;
+}
+
+.rec.rec-dot_active {
+  background-color: gray;
+  box-shadow: 0 0 1px 3px gray;
+}
+
+.rec.rec-dot_active:focus {
+  background-color: gray;
+  box-shadow: 0 0 1px 3px gray;
+}
+
