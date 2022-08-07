@@ -4,6 +4,7 @@ import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react'
 import Carousel from "react-elastic-carousel";
 import { Product } from "./Product";
+import { Loader } from './Loader';
 
 const breakPoints = [
     { width: 200, itemsToShow: 1 },
@@ -17,7 +18,8 @@ export const PostDetails = (props) => {
         post,   
         isOpen,
         close, 
-        products
+        products,
+        loading
     } = props;
 
     const [ exactProducts, setExactProducts ] = useState([]);
@@ -25,96 +27,100 @@ export const PostDetails = (props) => {
 
     useEffect(() => {
         if (products) {
-            console.log('products', products);
             setExactProducts([...products.filter((product) => product.attributes.exact_item)]);
             setSuggestedProducts([...products.filter((product) => !product.attributes.exact_item)]);
         }
     }, [ products ]);
 
     return (
-        <Transition appear show={ isOpen } as={ Fragment }>
-            <Dialog as="div" className="relative z-10" onClose={ close }>
-                <Transition.Child
-                    as={ Fragment }
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="fixed inset-0 bg-black bg-opacity-50" />
-                </Transition.Child>
-
-                <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+        <>
+            <Transition appear show={ isOpen } as={ Fragment }>
+                <Dialog as="div" className="relative z-10" onClose={ close }>
                     <Transition.Child
                         as={ Fragment }
                         enter="ease-out duration-300"
-                        enterFrom="opacity-0 scale-95"
-                        enterTo="opacity-100 scale-100"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
                         leave="ease-in duration-200"
-                        leaveFrom="opacity-100 scale-100"
-                        leaveTo="opacity-0 scale-95"
-                    >
-                        <Dialog.Panel className="md:w-3/4 w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                        <Dialog.Title
-                            as="h3"
-                            className="text-lg font-medium leading-6 text-gray-900 m-2"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
                         >
-                            { post.name }
-                        </Dialog.Title>
-                        <div className="w-full bg-red-500">
-                            <img src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="placeholder image"/>
-                        </div>
-
-                        <div className="mt-2">
-                            <p className="text-sm text-gray-500">
-                                { post.desc }
-                            </p>
-                        </div>
-
-                        <div>
-
-                        { exactProducts.length > 0 && (
-                            <div className="mt-6">
-                                <p className="text-lg font-semibold my-3">Products:</p>
-
-                                <Carousel breakPoints={ breakPoints }>
-                                { exactProducts && exactProducts.map((product, idx) => (
-                                    <Product key={ idx } data={ product } />
-                                )) }
-                                </Carousel>
-                            </div> 
-                        ) }
-
-                        { suggestedProducts.length > 0 && (
-                            <div className="mt-6">
-                                <p className="text-lg font-semibold my-3">Related Products:</p>
-
-                                <Carousel breakPoints={ breakPoints }>
-                                { suggestedProducts && suggestedProducts.map((product, idx) => (
-                                    <Product key={ idx } data={ product } />
-                                )) }
-                                </Carousel>
-                            </div>  
-                        ) }
-                        </div>
-
-                        <div className="mt-6">
-                            <button
-                            type="button"
-                            className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                            onClick={ close }
-                            >
-                            Close
-                            </button>
-                        </div>
-                        </Dialog.Panel>
+                        <div className="fixed inset-0 bg-black bg-opacity-50" />
                     </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                        <Transition.Child
+                            as={ Fragment }
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                            >
+                            <Dialog.Panel className="md:w-3/4 w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all relative min-h-screen">
+                                <Loader loading={ loading } />
+                                <div className={`${ loading ? 'invisible' : '' }`}>
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-gray-900 m-2"
+                                        >
+                                        { post.name }
+                                    </Dialog.Title>
+                                    <div className="w-full bg-red-500">
+                                        <img src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="placeholder image"/>
+                                    </div>
+
+                                    <div className="mt-2">
+                                        <p className="text-sm text-gray-500">
+                                            { post.desc }
+                                        </p>
+                                    </div>
+
+                                    <div>
+
+                                    { exactProducts.length > 0 && (
+                                        <div className="mt-6">
+                                            <p className="text-lg font-semibold my-3">Products:</p>
+
+                                            <Carousel breakPoints={ breakPoints }>
+                                            { exactProducts && exactProducts.map((product, idx) => (
+                                                <Product key={ idx } data={ product } />
+                                            )) }
+                                            </Carousel>
+                                        </div> 
+                                    ) }
+
+                                    { suggestedProducts.length > 0 && (
+                                        <div className="mt-6">
+                                            <p className="text-lg font-semibold my-3">Related Products:</p>
+
+                                            <Carousel breakPoints={ breakPoints }>
+                                            { suggestedProducts && suggestedProducts.map((product, idx) => (
+                                                <Product key={ idx } data={ product } />
+                                                )) }
+                                            </Carousel>
+                                        </div>  
+                                    ) }
+                                    </div>
+
+                                    <div className="mt-6">
+                                        <button
+                                        type="button"
+                                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                        onClick={ close }
+                                        >
+                                        Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </Dialog.Panel>
+                        </Transition.Child>
+                        </div>
                     </div>
-                </div>
-            </Dialog>
-        </Transition>
+                </Dialog>
+            </Transition>
+        </>
     );
 }
