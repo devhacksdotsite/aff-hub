@@ -1,7 +1,6 @@
 
 export const Product = (props) => {
     const { data } = props;
-    console.log(data);
 
     return (
         <div className="w-5/6 h-56 bg-red-300 m-auto overflow-y-hidden flex flex-column justify-center">

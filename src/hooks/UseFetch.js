@@ -1,20 +1,36 @@
 import { useEffect, useState } from 'react';
 
-export const UseFetch = (path, init = false) => {
-    const [ data, setData ] = useState();
+export const UseFetch = (endpoints, init = false) => {
+    const [ data, setData ] = useState({});
+    const [ loading, setLoading ] = useState(true);
 
-    const BASE_URL = 'http://localhost:1337/api'
+    const BASE_URL = 'http://localhost:1337/api';
 
     useEffect(() => {
         if (init) {
+            setLoading(true);
             (async () => {
-                console.log('data fetched')
-                const promise = await fetch(`${ BASE_URL }${ path }`);
-                const res = await promise.json();
-                setData(res.data);
+                const promises = await Promise.all(
+                    endpoints.map(async endpoint => {
+                        return await fetch(`${ BASE_URL }${ endpoint.path }`);
+                    })
+                );
+
+                const res = await Promise.all(promises.map(promise => {
+                    if (promise.ok) {
+                        return promise.json();
+                    } else {
+                        alert('Fetching error...');
+                    }
+                }));
+
+                const output = {}
+                res.forEach((d, idx) => output[endpoints[idx].name] = d);
+                setData(output);
+                setLoading(false);
             })();
         }
-    }, [ path, init ]);
+    }, [ init ]);
 
-    return data;
+    return { data, loading };
 }

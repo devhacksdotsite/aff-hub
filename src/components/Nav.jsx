@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 export const Nav = (props) => {
     const { active } = props;
 
+    const isActive = (navItem) => navItem === active ? 'scale-110 font-bold' : '';
+
     return (
         <>
             <div className="avatar flex justify-center items-center">
@@ -12,11 +14,11 @@ export const Nav = (props) => {
             <div className="nav m-6">
                 <ul className='flex justify-center text-lg'>
                     <Link to="/">
-                        <li className='active scale-110 font-bold'>Home</li>
+                        <li className={ isActive('home') }>Home</li>
                     </Link>
                     <li className="pipe mx-2 font-bold">|</li>
                     <Link to="/about">
-                        <li>About</li>
+                        <li className={ isActive('about') }>About</li>
                     </Link>
                 </ul>
             </div>

@@ -26,9 +26,10 @@ export const Post = (props) => {
     setInitialLoad(true);
   }
 
-  const ENDPOINT = `/posts/${ id }?populate[products][populate]=product_image`;
-  const data = UseFetch(ENDPOINT, initLoad);
-  // console.log('data', data);
+  const { data, loading } = UseFetch([{
+    path: `/posts/${ id }?populate[products][populate]=product_image`,
+    name: 'products'
+  }], initLoad);
 
   return (
     <>
@@ -46,7 +47,8 @@ export const Post = (props) => {
         open={ openModal }
         close={ closeModal }
         post={ { id, name, desc, img } }
-        products={ data?.attributes.products.data }
+        products={ data.products?.data.attributes.products.data || null }
+        loading={ loading }
       />
     </>
   );
