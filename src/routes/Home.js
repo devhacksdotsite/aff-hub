@@ -8,6 +8,7 @@ import { Nav } from "../components/Nav";
 export const Home = (props) => {
     const { 
         data, 
+        avatar,
         loading 
     } = props;
 
@@ -15,7 +16,7 @@ export const Home = (props) => {
         <>
             <Loader loading={ loading } />
             <div className={ `${ loading ? 'invisible' : '' } container mx-auto my-6 p-4` }>
-                <Nav active="home" />
+                <Nav active="home" avatar={ avatar } />
                 
                 <div className="categories h-80">
                     <ul className="my-6 mx-2">

@@ -27,7 +27,7 @@ export const Post = (props) => {
   }
 
   const { data, loading } = UseFetch([{
-    path: `/posts/${ id }?populate[products][populate]=product_image`,
+    path: `/api/posts/${ id }?populate[products][populate]=product_image`,
     name: 'products'
   }], initLoad);
 
@@ -35,11 +35,9 @@ export const Post = (props) => {
     <>
       <div 
         onClick={ () => openModal(id) }
-        className="cursor-pointer bg-white hover:bg-indigo-200 md:max-w-sm h-56 border-2 p-6 flex transition-all ease-in-out duration-100 shadow-sm"
+        className="cursor-pointer bg-white hover:bg-slate-200 md:max-w-sm h-56 border-2 p-6 flex transition-all ease-in-out duration-100 shadow-sm"
     >
           <img src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="image placeholder" />
-          {/* { data?.attributes && data.attributes.name } */}
-          { name }
       </div>
 
       <PostDetails 

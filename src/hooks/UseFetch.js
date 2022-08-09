@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
+const { REACT_APP_STRAPI_API } = process.env;
+
 export const UseFetch = (endpoints, init = false) => {
     const [ data, setData ] = useState({});
     const [ loading, setLoading ] = useState(true);
-
-    const BASE_URL = 'http://localhost:1337/api';
 
     useEffect(() => {
         if (init) {
@@ -12,7 +12,7 @@ export const UseFetch = (endpoints, init = false) => {
             (async () => {
                 const promises = await Promise.all(
                     endpoints.map(async endpoint => {
-                        return await fetch(`${ BASE_URL }${ endpoint.path }`);
+                        return await fetch(`${ REACT_APP_STRAPI_API }${ endpoint.path }`);
                     })
                 );
 

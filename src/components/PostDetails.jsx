@@ -68,7 +68,7 @@ export const PostDetails = (props) => {
                                         >
                                         { post.name }
                                     </Dialog.Title>
-                                    <div className="w-full bg-red-500">
+                                    <div className="w-full">
                                         <img src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="placeholder image"/>
                                     </div>
 
