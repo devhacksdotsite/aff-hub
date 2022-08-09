@@ -8,6 +8,7 @@ import {
 import { Home } from './routes/Home';
 import { About } from './routes/About';
 import { Category } from './routes/Category';
+import { Error } from './routes/Error';
 
 // hooks
 import { UseFetch } from './hooks/UseFetch';
@@ -34,6 +35,7 @@ export default function App() {
         ></Route>
         <Route path="/about" element={ <About avatar={ data.avatar?.data.attributes.avatar.data || null } /> }></Route> 
         <Route path="/category/:id" element={ <Category /> }></Route> 
+        <Route path="*" element={ <Error /> }></Route>
       </Routes>
     </Router>
   );
