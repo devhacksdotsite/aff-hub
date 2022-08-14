@@ -9,7 +9,7 @@ export const Nav = (props) => {
 
     return (
         <>
-            <div className="avatar flex justify-center items-center">
+            <div className="avatar flex justify-center items-center mt-8">
                 <img className="w-54 h-54 rounded-full" src={`${ REACT_APP_STRAPI_API }${ avatar?.attributes.formats.thumbnail.url }`} alt="profile image"/>
             </div>
             

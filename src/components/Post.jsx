@@ -6,6 +6,7 @@ import { PostDetails } from './PostDetails';
 // hooks
 import { UseFetch } from '../hooks/UseFetch';
 
+const { REACT_APP_STRAPI_API } = process.env;
 
 export const Post = (props) => {
   const { 
@@ -35,9 +36,18 @@ export const Post = (props) => {
     <>
       <div 
         onClick={ () => openModal(id) }
-        className="cursor-pointer bg-white hover:bg-slate-200 md:max-w-sm h-56 border-2 p-6 flex transition-all ease-in-out duration-100 shadow-sm"
+        className="realtive cursor-pointer bg-white hover:bg-slate-200 md:max-w-sm h-56 border-2 flex transition-all ease-in-out duration-100 shadow-sm"
     >
-          <img src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="image placeholder" />
+          { img.data ? ( 
+            <img className="w-full object-cover" src={`${ REACT_APP_STRAPI_API }${ img.data?.attributes.formats.small.url }`} alt={ img.data?.attributes.name } title={ name } /> 
+          ) : (
+            <img className="w-full object-cover" src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="image placeholder" /> 
+          ) }
+
+        <div className="absolute z-10 bg-white text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-90 duration-300">
+                <h1  className="tracking-wider" >Title</h1>
+                <p  className="mx-auto">Description</p>
+              </div>
       </div>
 
       <PostDetails 

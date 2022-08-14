@@ -13,6 +13,8 @@ const breakPoints = [
     { width: 1000, itemsToShow: 4 }
 ];
 
+const { REACT_APP_STRAPI_API } = process.env;
+
 export const PostDetails = (props) => {
     const { 
         post,   
@@ -69,7 +71,11 @@ export const PostDetails = (props) => {
                                         { post.name }
                                     </Dialog.Title>
                                     <div className="w-full">
-                                        <img src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="placeholder image"/>
+                                    { post.img?.data ? ( 
+                                        <img className="w-full h-auto object-cover" src={`${ REACT_APP_STRAPI_API }${ post.img.data?.attributes.formats.medium.url }`} alt={ post.img.data?.attributes.name } /> 
+                                    ) : (
+                                        <img className="w-full object-cover" src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="image placeholder" /> 
+                                    ) }
                                     </div>
 
                                     <div className="mt-2">
@@ -111,7 +117,7 @@ export const PostDetails = (props) => {
                                         className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                         onClick={ close }
                                         >
-                                        Close
+                                            Close
                                         </button>
                                     </div>
                                 </div>
